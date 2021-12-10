@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@700&family=Roboto+Slab:wght@700&family=Space+Mono:wght@700&display=swap');
+
+  html,
+  body,
+  #___gatsby,
+  #___gatsby > div {
+    height: 100%;
+  }
+}
+
+@layer utilities {
+  .transition-stroke {
+    transition: stroke-dashoffset 1000ms linear;
+  }
+}
+
+@layer components {
+  .clock-container {
+    background: linear-gradient(315deg, #2e325a 0%, #0e112a 100%);
+    box-shadow: -50px -50px 100px #272c5a, 50px 50px 100px #121530;
+  }
+}
+
+.backdrop-enter {
+  background: rgba(0, 0, 0, 0);
+}
+
+.backdrop-enter-active {
+  transition: 300ms;
+  background: rgba(0, 0, 0, 50%);
+}
+
+.backdrop-enter-done {
+  background: rgba(0, 0, 0, 50%);
+}
+
+.backdrop-exit {
+  background: rgba(0, 0, 0, 50%);
+}
+
+.backdrop-exit-active {
+  background: rgba(0, 0, 0, 0);
+  transition: 300ms;
+}
+
+.dialog-enter {
+  opacity: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.05);
+}
+
+.dialog-enter-active {
+  transition: 300ms;
+  opacity: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.dialog-enter-done {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.dialog-exit {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.dialog-exit-active {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.05);
+  transition: 300ms;
+}
