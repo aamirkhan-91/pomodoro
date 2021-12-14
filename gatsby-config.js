@@ -5,6 +5,7 @@ module.exports = {
   },
   pathPrefix: '/pomodoro',
   plugins: [
+    'gatsby-plugin-react-helmet',
     'gatsby-plugin-postcss',
     {
       resolve: 'gatsby-plugin-alias-imports',
