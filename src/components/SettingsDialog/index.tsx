@@ -9,9 +9,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { CSSTransition } from 'react-transition-group';
 
-import { SettingsDialogProps } from './types';
-
-const SettingsDialog: FC<SettingsDialogProps> = () => {
+const SettingsDialog: FC = () => {
   const isBrowser = typeof window !== 'undefined';
 
   const [isOpen, setIsOpen] = useState(false);
