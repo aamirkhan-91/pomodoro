@@ -3,6 +3,7 @@ module.exports = {
     siteUrl: 'https://www.yourdomain.tld',
     title: 'pomodoro-app',
   },
+  pathPrefix: '/pomodoro',
   plugins: [
     'gatsby-plugin-postcss',
     {
