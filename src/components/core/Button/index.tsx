@@ -23,7 +23,7 @@ const Button: FC<ButtonProps> = ({ children, className, onClick }) => {
       break;
 
     case 'pink':
-      classes = classes.concat('bg-ping');
+      classes = classes.concat('bg-pink');
       break;
 
     case 'red':
