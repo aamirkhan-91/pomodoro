@@ -1,11 +1,9 @@
 import { Typography } from '@core-components';
 import { useTheme } from '@hooks/useTheme';
 import { useTimer } from '@src/hooks/useTimer';
-// import { RefreshIcon } from '@icons';
 import clsx from 'clsx';
 import React, { FC } from 'react';
 
-// import { CSSTransition } from 'react-transition-group';
 import { TimerProps } from './types';
 
 const Timer: FC<TimerProps> = ({
@@ -14,7 +12,6 @@ const Timer: FC<TimerProps> = ({
   onPause,
   onRestart,
   onResume,
-  // onReset,
 }) => {
   const { progress, isRunning, isPaused } = useTimer();
   const { selectedColor } = useTheme();
@@ -94,7 +91,7 @@ const Timer: FC<TimerProps> = ({
 
   return (
     <div
-      className={`clock-container w-[300px] h-[300px] tablet:w-[410px] tablet:h-[410px]  rounded-full my-auto relative color ${textColor}`}
+      className={`clock-container w-[300px] h-[300px] tablet:w-[410px] tablet:h-[410px]  rounded-full my-auto relative ${textColor}`}
     >
       <div className="absolute w-9/10 h-9/10 bg-bg-dark rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <svg

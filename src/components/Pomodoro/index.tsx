@@ -10,7 +10,6 @@ const Pomodoro: FC = () => {
     timerSettings,
     progress,
     isRunning,
-    isPaused,
     updateProgress,
     setIsPaused,
     setIsRunning,
@@ -66,12 +65,6 @@ const Pomodoro: FC = () => {
     setIsRunning(true);
   };
 
-  // const onReset = () => {
-  //   setIsPaused(false);
-  //   setIsRunning(false);
-  //   setRemainingTime(timerSettings[selectedOption] * 60);
-  // };
-
   return (
     <div className="flex flex-col flex-1 justify-between items-center">
       <ControlBar
@@ -84,7 +77,6 @@ const Pomodoro: FC = () => {
         onPause={onPause}
         onRestart={onRestart}
         onResume={onResume}
-        // onReset={onReset}
       />
     </div>
   );

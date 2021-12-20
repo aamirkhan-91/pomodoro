@@ -4,5 +4,4 @@ export type TimerProps = {
   onPause: () => void;
   onRestart: () => void;
   onResume: () => void;
-  // onReset: () => void;
 };
