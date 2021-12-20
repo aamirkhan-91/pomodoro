@@ -43,6 +43,20 @@ const SettingsDialog: FC = () => {
     }
   }, [timerSettings, isOpen]);
 
+  const haveTimerSettingsChanged = (): boolean => {
+    if (localTimerSettings !== null) {
+      let key: keyof TimerSettings;
+
+      for (key in localTimerSettings) {
+        if (localTimerSettings[key] !== timerSettings[key]) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  };
+
   const onClickApplyChanges = () => {
     if (
       localTimerSettings !== null &&
@@ -52,7 +66,10 @@ const SettingsDialog: FC = () => {
     ) {
       setFont(locallySelectedFont);
       setColor(locallySelectedColor);
-      setTimerSettings(localTimerSettings);
+
+      if (haveTimerSettingsChanged()) {
+        setTimerSettings(localTimerSettings);
+      }
     }
 
     setIsOpen(false);
