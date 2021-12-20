@@ -20,7 +20,7 @@ const Button: FC<ButtonProps> = ({
       break;
 
     case 'pink':
-      bgColor = 'bg-ping';
+      bgColor = 'bg-pink';
       break;
 
     case 'red':
