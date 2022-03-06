@@ -1,7 +1,6 @@
 import { Button, NumericInput, Typography } from '@core-components';
-import { useTheme } from '@hooks/useTheme';
-import { useTimer } from '@hooks/useTimer';
 import { CheckmarkIcon, CrossIcon, GearIcon } from '@icons';
+import { useStore } from '@src/store';
 import { ColorType, FontType } from '@src/types/theme';
 import { TimerSettings } from '@src/types/timer';
 import clsx from 'clsx';
@@ -22,8 +21,13 @@ const SettingsDialog: FC = () => {
   const [localTimerSettings, setLocalTimerSettings] =
     useState<TimerSettings | null>(null);
 
-  const { selectedFont, selectedColor, setFont, setColor } = useTheme();
-  const { timerSettings, setTimerSettings } = useTimer();
+  const selectedFont = useStore((state) => state.selectedFont);
+  const selectedColor = useStore((state) => state.selectedColor);
+  const timerSettings = useStore((state) => state.timerSettings);
+
+  const setTimerSettings = useStore((state) => state.setTimerSettings);
+  const setFont = useStore((state) => state.setSelectedFont);
+  const setColor = useStore((state) => state.setSelectedColor);
 
   useEffect(() => {
     if (selectedFont) {
@@ -84,11 +88,11 @@ const SettingsDialog: FC = () => {
           unmountOnExit
           timeout={300}
           in={isOpen}
-          classNames="backdrop"
+          classNames='backdrop'
         >
           <div
-            role="presentation"
-            className="absolute h-screen w-full top-0 left-0 z-10 flex justify-center items-center"
+            role='presentation'
+            className='absolute h-screen w-full top-0 left-0 z-10 flex justify-center items-center'
             onClick={() => setIsOpen(false)}
             onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => {
               if (e.key === '27') {
@@ -101,35 +105,35 @@ const SettingsDialog: FC = () => {
           timeout={300}
           in={isOpen}
           unmountOnExit
-          classNames="dialog"
+          classNames='dialog'
         >
           {localTimerSettings && locallySelectedColor && locallySelectedFont ? (
-            <div className="max-w-[327px] tablet:max-w-[540px] absolute w-full bg-white rounded-lg z-20">
-              <div className="p-6 flex justify-between items-center border-b border-divider">
-                <Typography variant="H2" color="dark">
+            <div className='max-w-[327px] tablet:max-w-[540px] absolute w-full bg-white rounded-lg z-20'>
+              <div className='p-6 flex justify-between items-center border-b border-divider'>
+                <Typography variant='H2' color='dark'>
                   Settings
                 </Typography>
                 <button
-                  className="rounded-full bg-bg-light bg-opacity-0 hover:bg-opacity-100 transition-colors duration-200 w-8 h-8 flex justify-center items-center"
+                  className='rounded-full bg-bg-light bg-opacity-0 hover:bg-opacity-100 transition-colors duration-200 w-8 h-8 flex justify-center items-center'
                   onClick={() => setIsOpen(false)}
                 >
                   <CrossIcon />
                 </button>
               </div>
-              <div className="px-6">
-                <div className="pb-6 pt-6 border-b border-divider">
+              <div className='px-6'>
+                <div className='pb-6 pt-6 border-b border-divider'>
                   <Typography
-                    variant="H4"
-                    className="text-center tablet:text-left"
-                    color="dark"
+                    variant='H4'
+                    className='text-center tablet:text-left'
+                    color='dark'
                   >
                     TIME (MINUTES)
                   </Typography>
-                  <div className="flex flex-col space-y-5 mt-4 tablet:flex-row tablet:space-y-0 tablet:space-x-4">
-                    <div className="flex tablet:flex-col tablet:space-y-2 justify-between items-center tablet:items-start">
-                      <Typography variant="Body2">pomodoro</Typography>
+                  <div className='flex flex-col space-y-5 mt-4 tablet:flex-row tablet:space-y-0 tablet:space-x-4'>
+                    <div className='flex tablet:flex-col tablet:space-y-2 justify-between items-center tablet:items-start'>
+                      <Typography variant='Body2'>pomodoro</Typography>
                       <NumericInput
-                        className="w-1/2 tablet:w-full"
+                        className='w-1/2 tablet:w-full'
                         value={localTimerSettings.pomodoro}
                         onChange={(e) =>
                           setLocalTimerSettings({
@@ -151,10 +155,10 @@ const SettingsDialog: FC = () => {
                         }
                       />
                     </div>
-                    <div className="flex tablet:flex-col tablet:space-y-2 justify-between items-center tablet:items-start">
-                      <Typography variant="Body2">short break</Typography>
+                    <div className='flex tablet:flex-col tablet:space-y-2 justify-between items-center tablet:items-start'>
+                      <Typography variant='Body2'>short break</Typography>
                       <NumericInput
-                        className="w-1/2 tablet:w-full"
+                        className='w-1/2 tablet:w-full'
                         value={localTimerSettings.short_break}
                         onChange={(e) =>
                           setLocalTimerSettings({
@@ -176,10 +180,10 @@ const SettingsDialog: FC = () => {
                         }
                       />
                     </div>
-                    <div className="flex tablet:flex-col tablet:space-y-2 justify-between items-center tablet:items-start">
-                      <Typography variant="Body2">long break</Typography>
+                    <div className='flex tablet:flex-col tablet:space-y-2 justify-between items-center tablet:items-start'>
+                      <Typography variant='Body2'>long break</Typography>
                       <NumericInput
-                        className="w-1/2 tablet:w-full"
+                        className='w-1/2 tablet:w-full'
                         value={localTimerSettings.long_break}
                         onChange={(e) =>
                           setLocalTimerSettings({
@@ -203,11 +207,11 @@ const SettingsDialog: FC = () => {
                     </div>
                   </div>
                 </div>
-                <div className="pb-6 pt-6 border-b border-divider tablet:flex tablet:items-center tablet:justify-between">
-                  <Typography variant="H4" align="center" color="dark">
+                <div className='pb-6 pt-6 border-b border-divider tablet:flex tablet:items-center tablet:justify-between'>
+                  <Typography variant='H4' align='center' color='dark'>
                     FONT
                   </Typography>
-                  <div className="mt-4 tablet:mt-0 flex space-x-1 justify-center">
+                  <div className='mt-4 tablet:mt-0 flex space-x-1 justify-center'>
                     <button
                       className={clsx(
                         'rounded-full flex justify-center items-center font-sano h-12 w-12 border-4 border-white hover:shadow-circle-option transition-shadow duration-300',
@@ -252,13 +256,13 @@ const SettingsDialog: FC = () => {
                     </button>
                   </div>
                 </div>
-                <div className="pb-16 pt-6  tablet:flex tablet:items-center tablet:justify-between">
-                  <Typography variant="H4" align="center" color="dark">
+                <div className='pb-16 pt-6  tablet:flex tablet:items-center tablet:justify-between'>
+                  <Typography variant='H4' align='center' color='dark'>
                     COLOR
                   </Typography>
-                  <div className="mt-4 tablet:mt-0 flex space-x-1 justify-center">
+                  <div className='mt-4 tablet:mt-0 flex space-x-1 justify-center'>
                     <button
-                      className="rounded-full flex justify-center items-center h-12 w-12 border-4 border-white hover:shadow-circle-option transition-shadow duration-300 bg-red p-2"
+                      className='rounded-full flex justify-center items-center h-12 w-12 border-4 border-white hover:shadow-circle-option transition-shadow duration-300 bg-red p-2'
                       onClick={() => setLocallySelectedColor('red')}
                     >
                       {locallySelectedColor === 'red' ? (
@@ -266,7 +270,7 @@ const SettingsDialog: FC = () => {
                       ) : null}
                     </button>
                     <button
-                      className="rounded-full flex justify-center items-center h-12 w-12 border-4 border-white hover:shadow-circle-option transition-shadow duration-300 bg-blue p-2"
+                      className='rounded-full flex justify-center items-center h-12 w-12 border-4 border-white hover:shadow-circle-option transition-shadow duration-300 bg-blue p-2'
                       onClick={() => setLocallySelectedColor('blue')}
                     >
                       {locallySelectedColor === 'blue' ? (
@@ -274,7 +278,7 @@ const SettingsDialog: FC = () => {
                       ) : null}
                     </button>
                     <button
-                      className="rounded-full flex justify-center items-center h-12 w-12 border-4 border-white hover:shadow-circle-option transition-shadow duration-300 bg-pink p-2"
+                      className='rounded-full flex justify-center items-center h-12 w-12 border-4 border-white hover:shadow-circle-option transition-shadow duration-300 bg-pink p-2'
                       onClick={() => setLocallySelectedColor('pink')}
                     >
                       {locallySelectedColor === 'pink' ? (
@@ -285,7 +289,7 @@ const SettingsDialog: FC = () => {
                 </div>
               </div>
               <Button
-                className="absolute top-full left-1/2 transform -translate-y-1/2 -translate-x-1/2"
+                className='absolute top-full left-1/2 transform -translate-y-1/2 -translate-x-1/2'
                 onClick={onClickApplyChanges}
               >
                 Apply
@@ -301,9 +305,9 @@ const SettingsDialog: FC = () => {
   return (
     <>
       {dialog}
-      <div className="flex justify-center">
-        <button className="group" onClick={() => setIsOpen(true)}>
-          <GearIcon className="transition-opacity duration-200 opacity-50 group-hover:opacity-100" />
+      <div className='flex justify-center'>
+        <button className='group' onClick={() => setIsOpen(true)}>
+          <GearIcon className='transition-opacity duration-200 opacity-50 group-hover:opacity-100' />
         </button>
       </div>
     </>

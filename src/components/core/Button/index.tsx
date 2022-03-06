@@ -1,11 +1,11 @@
-import { useTheme } from '@hooks/useTheme';
+import { useStore } from '@src/store';
 import clsx from 'clsx';
 import React, { FC } from 'react';
 
 import { ButtonProps } from './types';
 
 const Button: FC<ButtonProps> = ({ children, className, onClick }) => {
-  const { selectedColor } = useTheme();
+  const selectedColor = useStore((state) => state.selectedColor);
 
   let classes = [
     'rounded-r-full',

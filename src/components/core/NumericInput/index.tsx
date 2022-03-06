@@ -17,20 +17,20 @@ const NumericInput: FC<NumericInputProps> = ({
         className={clsx(
           'rounded-l-xl rounded-r-xl py-2 bg-bg-light indent-4 w-full'
         )}
-        type="number"
-        min="0"
+        type='number'
+        min='0'
         value={value}
         onChange={onChange}
       />
-      <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex flex-col space-y-1">
+      <div className='absolute right-3 top-1/2 transform -translate-y-1/2 flex flex-col space-y-1'>
         <button
-          className="p-1"
+          className='p-1'
           onClick={() => (value < 60 ? onIncrement() : null)}
         >
           <UpArrowIcon />
         </button>
         <button
-          className="p-1"
+          className='p-1'
           onClick={() => (value > 1 ? onDecrement() : null)}
         >
           <DownArrowIcon />

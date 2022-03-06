@@ -1,20 +1,64 @@
 import { Typography } from '@core-components';
-import { useTheme } from '@hooks/useTheme';
-import { useTimer } from '@src/hooks/useTimer';
+import { useStore } from '@src/store';
 import clsx from 'clsx';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 
-import { TimerProps } from './types';
+const Timer: FC = () => {
+  const progress = useStore((state) => state.progress);
+  const isRunning = useStore((state) => state.isRunning);
+  const isPaused = useStore((state) => state.isPaused);
+  const selectedColor = useStore((state) => state.selectedColor);
+  const selectedOption = useStore((state) => state.selectedOption);
+  const timerSettings = useStore((state) => state.timerSettings);
 
-const Timer: FC<TimerProps> = ({
-  duration,
-  onStart,
-  onPause,
-  onRestart,
-  onResume,
-}) => {
-  const { progress, isRunning, isPaused } = useTimer();
-  const { selectedColor } = useTheme();
+  const updateProgress = useStore((state) => state.tickProgress);
+  const setIsPaused = useStore((state) => state.setIsPaused);
+  const setIsRunning = useStore((state) => state.setIsRunning);
+  const restart = useStore((state) => state.restart);
+
+  const timeout = useRef<NodeJS.Timeout | null>(null);
+
+  const duration = timerSettings[selectedOption] * 60;
+
+  useEffect(() => {
+    setIsRunning(false);
+    setIsPaused(false);
+  }, [setIsPaused, setIsRunning, timerSettings]);
+
+  useEffect(() => {
+    if (isRunning) {
+      timeout.current = setTimeout(() => {
+        if (progress < duration) {
+          updateProgress();
+        }
+      }, 1000);
+
+      if (progress === duration) {
+        clearTimeout(timeout.current as NodeJS.Timeout);
+      }
+
+      return () => clearTimeout(timeout.current as NodeJS.Timeout);
+    }
+  }, [duration, isRunning, progress, updateProgress]);
+
+  const onStart = () => {
+    setIsRunning(true);
+  };
+
+  const onPause = () => {
+    setIsPaused(true);
+    setIsRunning(false);
+    clearTimeout(timeout.current as NodeJS.Timeout);
+  };
+
+  const onRestart = () => {
+    restart();
+  };
+
+  const onResume = () => {
+    setIsPaused(false);
+    setIsRunning(true);
+  };
 
   const onClick = () => {
     if (isRunning) {
@@ -69,11 +113,11 @@ const Timer: FC<TimerProps> = ({
   }
 
   const button = (
-    <button onClick={onClick} className="w-full">
+    <button onClick={onClick} className='w-full'>
       <Typography
-        align="center"
+        align='center'
         className={`-mr-3 transition-color duration-200 ${hoverColor}`}
-        variant="H3"
+        variant='H3'
       >
         {buttonText}
       </Typography>
@@ -93,35 +137,35 @@ const Timer: FC<TimerProps> = ({
     <div
       className={`clock-container w-[300px] h-[300px] tablet:w-[410px] tablet:h-[410px]  rounded-full my-auto relative ${textColor}`}
     >
-      <div className="absolute w-9/10 h-9/10 bg-bg-dark rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+      <div className='absolute w-9/10 h-9/10 bg-bg-dark rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
         <svg
-          className="w-full h-full transition-colors duration-150"
-          viewBox="0 0 100 100"
+          className='w-full h-full transition-colors duration-150'
+          viewBox='0 0 100 100'
         >
           <circle
             style={{
               strokeDasharray: 2 * 3.142 * 47,
               strokeDashoffset: (progress / duration) * 2 * 3.142 * 47,
             }}
-            cx="50"
-            cy="50"
-            r="47"
-            fill="none"
-            strokeWidth="3"
-            strokeLinecap="round"
-            className="stroke-current transform origin-center -rotate-90 transition-stroke"
+            cx='50'
+            cy='50'
+            r='47'
+            fill='none'
+            strokeWidth='3'
+            strokeLinecap='round'
+            className='stroke-current transform origin-center -rotate-90 transition-stroke'
           />
         </svg>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
           <Typography
             className={clsx({
               'animate-blink': isPaused,
             })}
-            variant="H1"
+            variant='H1'
           >
             {getTimeInMinutes(duration - progress)}
           </Typography>
-          <div className="absolute flex flex-col items-center top-full left-1/2 transform -translate-x-1/2">
+          <div className='absolute flex flex-col items-center top-full left-1/2 transform -translate-x-1/2'>
             {button}
           </div>
         </div>

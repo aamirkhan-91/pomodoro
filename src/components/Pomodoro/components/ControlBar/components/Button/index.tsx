@@ -1,5 +1,5 @@
 import { Typography } from '@core-components';
-import { useTheme } from '@hooks/useTheme';
+import { useStore } from '@src/store';
 import clsx from 'clsx';
 import React, { FC } from 'react';
 
@@ -11,7 +11,8 @@ const Button: FC<ButtonProps> = ({
   isActive = false,
   onClick,
 }) => {
-  const { selectedColor } = useTheme();
+  const selectedColor = useStore((state) => state.selectedColor);
+
   let bgColor;
 
   switch (selectedColor) {
@@ -39,7 +40,7 @@ const Button: FC<ButtonProps> = ({
       onClick={() => onClick(controlOption)}
     >
       <Typography
-        align="center"
+        align='center'
         color={isActive ? 'dark' : 'primary'}
         className={clsx(
           'group-hover:text-opacity-100 transition-colors duration-200',
@@ -47,7 +48,7 @@ const Button: FC<ButtonProps> = ({
             'text-opacity-40': !isActive,
           }
         )}
-        variant="Body2"
+        variant='Body2'
       >
         {title}
       </Typography>

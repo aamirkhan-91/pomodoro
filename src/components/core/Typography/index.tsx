@@ -1,4 +1,4 @@
-import { useTheme } from '@hooks/useTheme';
+import { useStore } from '@src/store';
 import clsx from 'clsx';
 import React, { FC } from 'react';
 
@@ -11,7 +11,8 @@ const Typography: FC<TypographyProps> = ({
   className = '',
   children,
 }) => {
-  const { selectedFont } = useTheme();
+  const selectedFont = useStore((state) => state.selectedFont);
+
   let classes: string[] = [className];
 
   switch (selectedFont) {

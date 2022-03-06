@@ -34,12 +34,14 @@ module.exports = {
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
     'linebreak-style': ['error', 'unix'],
-    quotes: ['error', 'single'],
     semi: ['error', 'always'],
-    'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['error'],
     'import/named': 2,
     indent: ['error', 2, { SwitchCase: 1 }],
+    'react/jsx-boolean-value': 2,
+    'jsx-quotes': ['error', 'prefer-single'],
+    quotes: ['error', 'single'],
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error'],
   },
   settings: {
     'import/resolver': {
